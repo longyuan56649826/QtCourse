@@ -12,3 +12,9 @@ RegisterView::~RegisterView()
 {
     delete ui;
 }
+
+void RegisterView::on_btReturnLogin_clicked()
+{
+
+}
+

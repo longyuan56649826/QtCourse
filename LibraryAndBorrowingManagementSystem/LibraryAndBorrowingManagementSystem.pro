@@ -11,36 +11,45 @@ CONFIG += c++17
 SOURCES += \
     bookview.cpp \
     borrowandreturnview.cpp \
+    borrowview.cpp \
     dataview.cpp \
     loginview.cpp \
     main.cpp \
     managementview.cpp \
     masterview.cpp \
+    personalinformationview.cpp \
     readerborrowandreturnview.cpp \
     readerview.cpp \
-    registerview.cpp
+    registerview.cpp \
+    returnview.cpp
 
 HEADERS += \
     bookview.h \
     borrowandreturnview.h \
+    borrowview.h \
     dataview.h \
     loginview.h \
     managementview.h \
     masterview.h \
+    personalinformationview.h \
     readerborrowandreturnview.h \
     readerview.h \
-    registerview.h
+    registerview.h \
+    returnview.h
 
 FORMS += \
     bookview.ui \
     borrowandreturnview.ui \
+    borrowview.ui \
     dataview.ui \
     loginview.ui \
     managementview.ui \
     masterview.ui \
+    personalinformationview.ui \
     readerborrowandreturnview.ui \
     readerview.ui \
-    registerview.ui
+    registerview.ui \
+    returnview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

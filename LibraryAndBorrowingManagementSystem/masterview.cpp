@@ -12,3 +12,9 @@ MasterView::~MasterView()
 {
     delete ui;
 }
+
+void MasterView::on_btBack_clicked()
+{
+
+}
+
