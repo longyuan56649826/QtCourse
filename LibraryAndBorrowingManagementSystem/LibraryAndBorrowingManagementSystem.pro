@@ -17,7 +17,8 @@ SOURCES += \
     managementview.cpp \
     masterview.cpp \
     readerborrowandreturnview.cpp \
-    readerview.cpp
+    readerview.cpp \
+    registerview.cpp
 
 HEADERS += \
     bookview.h \
@@ -27,7 +28,8 @@ HEADERS += \
     managementview.h \
     masterview.h \
     readerborrowandreturnview.h \
-    readerview.h
+    readerview.h \
+    registerview.h
 
 FORMS += \
     bookview.ui \
@@ -37,7 +39,8 @@ FORMS += \
     managementview.ui \
     masterview.ui \
     readerborrowandreturnview.ui \
-    readerview.ui
+    readerview.ui \
+    registerview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
