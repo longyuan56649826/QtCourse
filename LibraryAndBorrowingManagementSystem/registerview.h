@@ -15,6 +15,11 @@ public:
     explicit RegisterView(QWidget *parent = nullptr);
     ~RegisterView();
 
+private slots:
+    void on_btReturnLogin_clicked();
+
+    void on_btRegister_clicked();
+
 private:
     Ui::RegisterView *ui;
 };

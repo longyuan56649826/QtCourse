@@ -18,3 +18,9 @@ void RegisterView::on_btReturnLogin_clicked()
 
 }
 
+
+void RegisterView::on_btRegister_clicked()
+{
+
+}
+

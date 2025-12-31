@@ -164,16 +164,16 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="btSignUp">
+        <widget class="QPushButton" name="btSignIn">
          <property name="text">
-          <string>注册</string>
+          <string>登录</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btSignIn">
+        <widget class="QPushButton" name="btSignUp">
          <property name="text">
-          <string>登录</string>
+          <string>注册</string>
          </property>
         </widget>
        </item>

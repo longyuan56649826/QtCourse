@@ -58,7 +58,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="btPerson">
+      <widget class="QPushButton" name="pushButton">
        <property name="minimumSize">
         <size>
          <width>50</width>
