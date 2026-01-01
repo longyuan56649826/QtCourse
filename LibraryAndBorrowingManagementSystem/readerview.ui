@@ -37,17 +37,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btAdd">
-         <property name="text">
-          <string>添加</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../Lab4/image/new.png</normaloff>../Lab4/image/new.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="btDelete">
          <property name="text">
           <string>删除</string>

@@ -23,7 +23,8 @@ SOURCES += \
     readerborrowandreturnview.cpp \
     readerview.cpp \
     registerview.cpp \
-    returnview.cpp
+    returnview.cpp \
+    usereditview.cpp
 
 HEADERS += \
     bookview.h \
@@ -39,7 +40,8 @@ HEADERS += \
     readerborrowandreturnview.h \
     readerview.h \
     registerview.h \
-    returnview.h
+    returnview.h \
+    usereditview.h
 
 FORMS += \
     bookview.ui \
@@ -54,7 +56,8 @@ FORMS += \
     readerborrowandreturnview.ui \
     readerview.ui \
     registerview.ui \
-    returnview.ui
+    returnview.ui \
+    usereditview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

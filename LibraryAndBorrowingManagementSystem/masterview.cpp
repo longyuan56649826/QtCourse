@@ -45,22 +45,15 @@ void MasterView::on_stackedWidget_currentChanged(int arg1)
 
     QString title=ui->stackedWidget->currentWidget()->windowTitle();
 
-    if(title=="读者借阅/还书界面"||title=="管理界面"){
-        ui->btLogout->setEnabled(true);
+    if(title=="登录"){
         ui->btBack->setEnabled(false);
     }
-    else if(title=="登录"){
-        ui->btLogout->setEnabled(false);
-        ui->btBack->setEnabled(false);
-    }
-    else
-        ui->btLogout->setEnabled(false);
 }
 
 
 void MasterView::on_btLogout_clicked()
 {
-    goPreviousView();
+    close();
 }
 
 void MasterView::goBookView()
@@ -171,6 +164,7 @@ void MasterView::goReaderView()
     readerView =new ReaderView(this);
 
     pushWidgetToStackView(readerView);
+    connect(readerView,SIGNAL(goUserEditView(int)),this,SLOT(goUserEditView(int)));
 
 }
 
@@ -201,6 +195,14 @@ void MasterView::goBorrowAndReturnDataView()
     borrowandreturndataView =new BorrowAndReturnDataView(this);
 
     pushWidgetToStackView(borrowandreturndataView);
+}
+
+void MasterView::goUserEditView(int rowNo)
+{
+    qDebug()<<"goUserEditView";
+    usereditView =new UserEditView(this,rowNo);
+
+    pushWidgetToStackView(usereditView);
 }
 
 

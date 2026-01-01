@@ -15,8 +15,18 @@ public:
     explicit ReaderView(QWidget *parent = nullptr);
     ~ReaderView();
 
+private slots:
+    void on_btSearch_clicked();
+
+    void on_btDelete_clicked();
+
+    void on_btEdit_clicked();
+
 private:
     Ui::ReaderView *ui;
+
+signals:
+    void goUserEditView(int index);
 };
 
 #endif // READERVIEW_H
