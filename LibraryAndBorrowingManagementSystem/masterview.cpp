@@ -121,6 +121,7 @@ void MasterView::goLoginView()
     pushWidgetToStackView(loginView);
 
     connect(loginView,SIGNAL(loginSuccess()),this,SLOT(goWelcomView()));
+    connect(loginView,SIGNAL(registerSuccess()),this,SLOT(goRegisterView()));
 }
 
 void MasterView::goManagementView()

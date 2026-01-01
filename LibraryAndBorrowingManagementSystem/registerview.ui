@@ -13,101 +13,47 @@
   <property name="windowTitle">
    <string>借书界面</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="3" column="6">
-    <spacer name="horizontalSpacer_2">
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="1">
+    <spacer name="verticalSpacer_3">
      <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>103</width>
-       <height>20</height>
+       <width>20</width>
+       <height>26</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="3" column="1" colspan="5">
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="5" column="1">
-      <widget class="QComboBox" name="dbeditIdentity">
-       <item>
-        <property name="text">
-         <string>读者</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>管理员</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>密码：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>姓名：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="InputUserPasswordAgain"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>用户名：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="InputUserPassword"/>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>身份证：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="InputId"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>重复密码：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>身份</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="InputName"/>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="InputUserName"/>
-     </item>
-    </layout>
-   </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="btRegister">
+   <item row="1" column="1">
+    <widget class="QLabel" name="label_7">
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>注册</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
     </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>37</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item row="3" column="0">
     <spacer name="horizontalSpacer">
@@ -122,40 +68,126 @@
      </property>
     </spacer>
    </item>
-   <item row="4" column="5">
-    <widget class="QPushButton" name="btReturnLogin">
-     <property name="text">
-      <string>返回登录</string>
-     </property>
-    </widget>
+   <item row="3" column="1">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0" colspan="3">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="5" column="1">
+        <widget class="QComboBox" name="dbeditIdentity">
+         <item>
+          <property name="text">
+           <string>读者</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>管理员</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>密码：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>姓名：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="InputUserPasswordAgain"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>用户名：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="InputUserPassword"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>身份证：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="InputId"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>重复密码：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>身份</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="InputName"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="InputUserName"/>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="btRegister">
+       <property name="text">
+        <string>注册</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="btReturnLogin">
+       <property name="text">
+        <string>返回登录</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="2" column="2">
-    <spacer name="verticalSpacer_2">
+   <item row="3" column="2">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>37</height>
+       <width>103</width>
+       <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="0" column="2" colspan="2">
-    <spacer name="verticalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>26</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="2" colspan="2">
+   <item row="4" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
@@ -167,21 +199,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLabel" name="label_7">
-     <property name="font">
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>注册</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

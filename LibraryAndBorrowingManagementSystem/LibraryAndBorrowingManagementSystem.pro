@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,6 +13,7 @@ SOURCES += \
     borrowandreturnview.cpp \
     borrowview.cpp \
     dataview.cpp \
+    idatabase.cpp \
     loginview.cpp \
     main.cpp \
     managementview.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     borrowandreturnview.h \
     borrowview.h \
     dataview.h \
+    idatabase.h \
     loginview.h \
     managementview.h \
     masterview.h \
