@@ -12,3 +12,35 @@ ManagementView::~ManagementView()
 {
     delete ui;
 }
+
+void ManagementView::on_btReader_clicked()
+{
+    emit goReader();
+
+}
+
+
+void ManagementView::on_btBook_clicked()
+{
+    emit goBook();
+}
+
+
+void ManagementView::on_btBorrowAndReturn_clicked()
+{
+    emit goBorrowAndReturn();
+
+}
+
+
+void ManagementView::on_btBorrowAndReturndata_clicked()
+{
+    emit goBorrowAndReturndata();
+}
+
+
+void ManagementView::on_btBecomeReader_clicked()
+{
+    emit goBecomeReader();
+}
+

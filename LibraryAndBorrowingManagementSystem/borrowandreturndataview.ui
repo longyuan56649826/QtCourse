@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BorrowView</class>
- <widget class="QWidget" name="BorrowView">
+ <class>BorrowAndReturnDataView</class>
+ <widget class="QWidget" name="BorrowAndReturnDataView">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>借阅</string>
+   <string>借阅数据统计</string>
   </property>
  </widget>
  <resources/>

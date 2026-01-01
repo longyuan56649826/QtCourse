@@ -14,6 +14,7 @@
 #include "readerview.h"
 #include "registerview.h"
 #include "returnview.h"
+#include "borrowandreturndataview.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -43,6 +44,7 @@ public slots:
     void goReaderView();
     void goRegisterView();
     void goReturnView();
+    void goBorrowAndReturnDataView();
 
 
 private slots:
@@ -68,6 +70,7 @@ private:
     ReaderView *readerView;
     RegisterView *registerView;
     ReturnView *returnView;
+    BorrowAndReturnDataView *borrowandreturndataView;
 
 };
 #endif // MASTERVIEW_H

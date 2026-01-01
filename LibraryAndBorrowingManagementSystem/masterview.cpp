@@ -45,7 +45,7 @@ void MasterView::on_stackedWidget_currentChanged(int arg1)
 
     QString title=ui->stackedWidget->currentWidget()->windowTitle();
 
-    if(title=="欢迎"){
+    if(title=="读者借阅/还书界面"||title=="管理界面"){
         ui->btLogout->setEnabled(true);
         ui->btBack->setEnabled(false);
     }
@@ -133,6 +133,12 @@ void MasterView::goManagementView()
 
     pushWidgetToStackView(managementView);
 
+    connect(managementView,SIGNAL(goBook()),this,SLOT(goBookView()));
+    connect(managementView,SIGNAL(goReader()),this,SLOT(goReaderView()));
+    connect(managementView,SIGNAL(goBorrowAndReturn()),this,SLOT(goBorrowAndReturnView()));
+    connect(managementView,SIGNAL(goBorrowAndReturndata()),this,SLOT(goBorrowAndReturnDataView()));
+    connect(managementView,SIGNAL(goBecomeReader()),this,SLOT(goReaderBorrowAndReturnView()));
+
 }
 
 void MasterView::goPersonalInformationView()
@@ -150,6 +156,11 @@ void MasterView::goReaderBorrowAndReturnView()
     readerborrowandreturnView =new ReaderBorrowAndReturnView(this);
 
     pushWidgetToStackView(readerborrowandreturnView);
+
+    connect(readerborrowandreturnView,SIGNAL(goReturn()),this,SLOT(goReturnView()));
+    connect(readerborrowandreturnView,SIGNAL(goBorrow()),this,SLOT(goBorrowView()));
+    connect(readerborrowandreturnView,SIGNAL(goPersonalInformation()),this,SLOT(goPersonalInformationView()));
+
 }
 
 
@@ -182,6 +193,14 @@ void MasterView::goReturnView()
 
     pushWidgetToStackView(returnView);
 
+}
+
+void MasterView::goBorrowAndReturnDataView()
+{
+    qDebug()<<"goBorrowAndReturnDataView";
+    borrowandreturndataView =new BorrowAndReturnDataView(this);
+
+    pushWidgetToStackView(borrowandreturndataView);
 }
 
 

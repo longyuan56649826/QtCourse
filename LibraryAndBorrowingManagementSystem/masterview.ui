@@ -62,6 +62,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btLogout">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string/>
        </property>

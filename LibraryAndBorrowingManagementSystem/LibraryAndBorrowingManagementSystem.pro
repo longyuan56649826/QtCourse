@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     bookview.cpp \
+    borrowandreturndataview.cpp \
     borrowandreturnview.cpp \
     borrowview.cpp \
     dataview.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     bookview.h \
+    borrowandreturndataview.h \
     borrowandreturnview.h \
     borrowview.h \
     dataview.h \
@@ -41,6 +43,7 @@ HEADERS += \
 
 FORMS += \
     bookview.ui \
+    borrowandreturndataview.ui \
     borrowandreturnview.ui \
     borrowview.ui \
     dataview.ui \
