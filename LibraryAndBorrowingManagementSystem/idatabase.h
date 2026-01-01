@@ -19,8 +19,9 @@ public:
     }
 
     QString userLogin(QString userName,QString password);
+    QString userRegister(QString userAccountName,QString password,QString passwordagain,QString userName,QString id,QString userIdentity);
 
-    void ininDatabase();
+    void initDatabase();
 
 
 private:
@@ -33,15 +34,26 @@ private:
 signals:
 
 public:
-    bool initPatientModel();
-    int addNewPatient();
-    bool searchPatient(QString filter);
-    bool deleteCurrentPatient();
-    bool submitPatientEdit();
-    void revertPatientEdit();
+public:
+    // bool initPatientModel();
+    // int addNewPatient();
+    // bool searchPatient(QString filter);
+    // bool deleteCurrentPatient();
+    // bool submitPatientEdit();
+    // void revertPatientEdit();
 
-    QSqlTableModel *patientTabModel;
-    QItemSelectionModel *thePatientSelection;
+    int addNewUser();//添加新的用户信息
+    bool initUserModel();//初始化用户信息模型
+    bool searchUser(QString filter);//按条件搜索用户
+    bool deleteCurrentUser();//删除当前选中的用户记录
+    bool submitUserEdit();//提交用户信息的编辑修改（保存到数据库）
+    void revertUserEdit();//撤销用户信息的编辑修改（放弃未提交的更改）
+
+    // QSqlTableModel *patientTabModel;
+    //QItemSelectionModel *thePatientSelection;
+
+    QSqlTableModel *UserTabModel;//用户信息表模型
+    QItemSelectionModel *theUserSelection;//用户信息表选择模型
 
 
 };

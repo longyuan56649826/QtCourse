@@ -22,6 +22,12 @@ private slots:
 
 private:
     Ui::RegisterView *ui;
+
+signals:
+    void loginSuccess();
+    void registerFailed();
+    void registerSuccess();
+    void gologinSuccess();
 };
 
 #endif // REGISTERVIEW_H

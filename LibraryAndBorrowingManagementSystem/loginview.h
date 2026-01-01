@@ -26,7 +26,7 @@ private slots:
 signals:
     void loginSuccess();
     void loginFailed();
-    void registerSuccess();
+    void goregisterSuccess();
 
 private:
     Ui::LoginView *ui;
