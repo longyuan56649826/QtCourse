@@ -20,8 +20,10 @@ void LoginView::on_btSignLogin_clicked()
 {
     QString status=IDatabase::getInstance().userLogin(ui->InputUserName->text(),ui->InputUserPassword->text());
 
-    if(status=="loginOK")
-        emit loginSuccess();
+    if(status=="AdminloginOK")
+        emit loginAdminSuccess();
+    else if(status=="ReaderloginOK")
+        emit loginReaderSuccess();
 }
 
 

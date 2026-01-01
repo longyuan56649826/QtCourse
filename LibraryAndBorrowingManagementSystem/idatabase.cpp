@@ -55,13 +55,17 @@ void IDatabase::revertUserEdit()
 QString IDatabase::userLogin(QString userName, QString password)
 {
     QSqlQuery query;
-    query.prepare("select UserAccountName,UserPassword from user where UserAccountName=:User");
+    query.prepare("select UserAccountName,UserPassword,UserIdentity from user where UserAccountName=:User");
     query.bindValue(":User",userName);
     query.exec();
     if(query.first() &&query.value("UserAccountName").isValid()){
         QString passwd=query.value("UserPassword").toString();
+        QString identity=query.value("UserIdentity").toString();
         if(passwd==password){
-            return "loginOK";
+            if(identity=="管理员")
+                return "AdminloginOK";
+            else if(identity=="读者")
+                return "ReaderloginOK";
         }
         else{
             qDebug()<<"wrong Password";
@@ -132,13 +136,13 @@ QString IDatabase::userRegister(QString userAccountName, QString password, QStri
     // ========== 第三步：所有校验通过，插入新用户信息到数据库 ==========
     // 准备插入语句（参数化查询，防止SQL注入）
     query.prepare("INSERT INTO User (userAccountName, UserPassword, userName, UserId, userIdentity) "
-                  "VALUES (:account, :pwd, :identity, :name, :id)");
+                  "VALUES (:account, :pwd, :name, :id, :identity)");
     // 绑定所有用户信息参数
     query.bindValue(":account", userAccountName); // 账号名
     query.bindValue(":pwd", password);            // 只保存第一个密码（password）
     query.bindValue(":identity", userIdentity);   // 用户身份（如学生/教师）
     query.bindValue(":name", userName);           // 用户名
-    query.bindValue(":id", id);                   // 用户ID
+    query.bindValue(":id",id);                   // 用户ID
 
     // 执行插入操作
     if (query.exec()) {

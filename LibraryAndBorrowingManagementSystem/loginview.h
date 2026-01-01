@@ -24,7 +24,8 @@ private slots:
     void on_btSignRegister_clicked();
 
 signals:
-    void loginSuccess();
+    void loginAdminSuccess();
+    void loginReaderSuccess();
     void loginFailed();
     void goregisterSuccess();
 

@@ -120,13 +120,9 @@ void MasterView::goLoginView()
 
     pushWidgetToStackView(loginView);
 
-    //if(){
 
-    //}
-    //else{
-
-    //}
-    connect(loginView,SIGNAL(loginSuccess()),this,SLOT(goManagementView()));
+    connect(loginView,SIGNAL(loginAdminSuccess()),this,SLOT(goManagementView()));
+    connect(loginView,SIGNAL(loginReaderSuccess()),this,SLOT(goReaderBorrowAndReturnView()));
     connect(loginView,SIGNAL(goregisterSuccess()),this,SLOT(goRegisterView()));
 }
 
@@ -154,8 +150,9 @@ void MasterView::goReaderBorrowAndReturnView()
     readerborrowandreturnView =new ReaderBorrowAndReturnView(this);
 
     pushWidgetToStackView(readerborrowandreturnView);
-
 }
+
+
 
 void MasterView::goReaderView()
 {
