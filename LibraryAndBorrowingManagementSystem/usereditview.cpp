@@ -14,3 +14,18 @@ UserEditView::~UserEditView()
 {
     delete ui;
 }
+
+void UserEditView::on_btEdit_clicked()
+{
+    IDatabase::getInstance().submitUserEdit();
+    emit goBack();
+}
+
+
+void UserEditView::on_btCancel_clicked()
+{
+    IDatabase::getInstance().revertUserEdit();
+
+    emit goBack();
+}
+

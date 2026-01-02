@@ -22,11 +22,14 @@ private slots:
 
     void on_btEdit_clicked();
 
+    void on_btBack_clicked();
+
 private:
     Ui::ReaderView *ui;
 
 signals:
     void goUserEditView(int index);
+    void goBack();
 };
 
 #endif // READERVIEW_H

@@ -14,15 +14,16 @@ bool IDatabase::initUserModel()
     return true;
 }
 
-int IDatabase::addNewUser()
+int IDatabase::addNewBook()
 {
-    UserTabModel->insertRow(UserTabModel->rowCount(),QModelIndex());
-    QModelIndex curIndex=UserTabModel->index(UserTabModel->rowCount()-1,1);
+    BookTabModel->insertRow(BookTabModel->rowCount(),QModelIndex());
+    QModelIndex curIndex=BookTabModel->index(BookTabModel->rowCount()-1,1);
 
     int curRecNo=curIndex.row();
-    QSqlRecord curRec=UserTabModel->record(curRecNo);
+    QSqlRecord curRec=BookTabModel->record(curRecNo);
+    curRec.setValue("BookNo",QUuid::createUuid().toString(QUuid::WithoutBraces));
 
-    UserTabModel->setRecord(curRecNo,curRec);
+    BookTabModel->setRecord(curRecNo,curRec);
 
     return curIndex.row();
 }
@@ -52,6 +53,44 @@ void IDatabase::revertUserEdit()
     UserTabModel->revertAll();
 }
 
+bool IDatabase::initBookModel()
+{
+    BookTabModel=new QSqlTableModel(this,database);
+    BookTabModel->setTable("Book");
+    BookTabModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    BookTabModel->setSort(BookTabModel->fieldIndex("BookNo"),Qt::AscendingOrder);
+
+    if(!(BookTabModel->select()))
+        return false;
+    theBookSelection=new QItemSelectionModel(BookTabModel);
+    return true;
+}
+
+bool IDatabase::searchBook(QString filter)
+{
+    BookTabModel->setFilter(filter);
+    return BookTabModel->select();
+}
+
+bool IDatabase::deleteCurrentBook()
+{
+    QModelIndex curIndex=theBookSelection->currentIndex();
+    BookTabModel->removeRow(curIndex.row());
+    BookTabModel->submitAll();
+    BookTabModel->select();
+    return true;
+}
+
+bool IDatabase::submitBookEdit()
+{
+    return BookTabModel->submitAll();
+}
+
+void IDatabase::revertBookEdit()
+{
+    BookTabModel->revertAll();
+}
+
 QString IDatabase::userLogin(QString userName, QString password)
 {
     QSqlQuery query;
@@ -77,7 +116,6 @@ QString IDatabase::userLogin(QString userName, QString password)
         return "wrongUserAccountname";
     }
     query.first();
-
 
 }
 

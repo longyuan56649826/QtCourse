@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bookeditview.cpp \
     bookview.cpp \
     borrowandreturndataview.cpp \
     borrowandreturnview.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
     usereditview.cpp
 
 HEADERS += \
+    bookeditview.h \
     bookview.h \
     borrowandreturndataview.h \
     borrowandreturnview.h \
@@ -44,6 +46,7 @@ HEADERS += \
     usereditview.h
 
 FORMS += \
+    bookeditview.ui \
     bookview.ui \
     borrowandreturndataview.ui \
     borrowandreturnview.ui \

@@ -62,3 +62,9 @@ void ReaderView::on_btEdit_clicked()
     emit goUserEditView(curIndex.row());
 }
 
+
+void ReaderView::on_btBack_clicked()
+{
+    emit goBack();
+}
+

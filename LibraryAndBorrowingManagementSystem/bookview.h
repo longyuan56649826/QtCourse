@@ -17,6 +17,16 @@ public:
 
 private:
     Ui::BookView *ui;
+
+signals:
+    void goBack();
+    void goBookEditView(int index);
+private slots:
+    void on_btBack_clicked();
+    void on_btAdd_clicked();
+    void on_btDelete_clicked();
+    void on_btEdit_clicked();
+    void on_btSearch_clicked();
 };
 
 #endif // BOOKVIEW_H

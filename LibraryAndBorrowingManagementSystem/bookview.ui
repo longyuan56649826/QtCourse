@@ -21,18 +21,7 @@
        <item>
         <widget class="QLineEdit" name="txtSearch">
          <property name="placeholderText">
-          <string>请输入姓名进行查找</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btSearch">
-         <property name="text">
-          <string>查找</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resource.qrc">
-           <normaloff>:/image/search.png</normaloff>:/image/search.png</iconset>
+          <string>请输入书本姓名进行查找</string>
          </property>
         </widget>
        </item>
@@ -48,13 +37,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btDelete">
+        <widget class="QPushButton" name="btSearch">
          <property name="text">
-          <string>删除</string>
+          <string>查找</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../Lab4/image/delete.png</normaloff>../Lab4/image/delete.png</iconset>
+          <iconset resource="resource.qrc">
+           <normaloff>:/image/search.png</normaloff>:/image/search.png</iconset>
          </property>
         </widget>
        </item>
@@ -66,6 +55,17 @@
          <property name="icon">
           <iconset>
            <normaloff>../Lab4/image/edit.png</normaloff>../Lab4/image/edit.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btDelete">
+         <property name="text">
+          <string>删除</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../Lab4/image/delete.png</normaloff>../Lab4/image/delete.png</iconset>
          </property>
         </widget>
        </item>

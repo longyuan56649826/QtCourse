@@ -63,6 +63,10 @@ void MasterView::goBookView()
 
     pushWidgetToStackView(bookView);
 
+    connect(bookView,SIGNAL(goBack()),this,SLOT(goManagementView()));
+    connect(bookView,SIGNAL(goBookEditView(int)),this,SLOT(goBookEditView(int)));
+
+
 }
 
 void MasterView::goBorrowAndReturnView()
@@ -164,7 +168,9 @@ void MasterView::goReaderView()
     readerView =new ReaderView(this);
 
     pushWidgetToStackView(readerView);
+
     connect(readerView,SIGNAL(goUserEditView(int)),this,SLOT(goUserEditView(int)));
+    connect(readerView,SIGNAL(goBack()),this,SLOT(goManagementView()));
 
 }
 
@@ -203,6 +209,18 @@ void MasterView::goUserEditView(int rowNo)
     usereditView =new UserEditView(this,rowNo);
 
     pushWidgetToStackView(usereditView);
+
+    connect(readerView,SIGNAL(goBack()),this,SLOT(goReaderView()));
+}
+
+void MasterView::goBookEditView(int rowNo)
+{
+    qDebug()<<"goBookEditView";
+    bookeditView =new BookEditView(this,rowNo);
+
+    pushWidgetToStackView(bookeditView);
+
+    connect(bookeditView,SIGNAL(goBack()),this,SLOT(goBookView()));
 }
 
 
