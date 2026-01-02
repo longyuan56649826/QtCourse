@@ -26,13 +26,15 @@ public:
     QString getCurrentUserAccount(); // 获取当前用户账号
     QSqlRecord getCurrentUserInfo();// 获取当前用户信息记录
 
+    QSqlDatabase database;
+
 
 private:
     explicit IDatabase(QObject *parent = nullptr);
     IDatabase(IDatabase const&)               = delete;
     void operator=(IDatabase const&)  = delete;
 
-    QSqlDatabase database;
+
     QString currentUserAccount; // 当前登录用户账号
 
 signals:
@@ -56,6 +58,11 @@ public:
     bool deleteCurrentBook();//删除当前选中的书本记录
     bool submitBookEdit();//提交书本信息的编辑修改（保存到数据库）
     void revertBookEdit();//撤销书本信息的编辑修改（放弃未提交的更改）
+
+    // 获取当前用户的UserNo
+    QString getCurrentUserNo();
+    // 执行借阅（用户No、书籍No、借阅数量）
+    bool borrowBook(const QString& userNo, const QString& bookNo, int borrowNum);
 
     // QSqlTableModel *patientTabModel;
     //QItemSelectionModel *thePatientSelection;

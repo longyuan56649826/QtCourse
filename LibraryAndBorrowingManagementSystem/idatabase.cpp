@@ -91,6 +91,77 @@ void IDatabase::revertBookEdit()
     BookTabModel->revertAll();
 }
 
+QString IDatabase::getCurrentUserNo()
+{
+    if (currentUserAccount.isEmpty()) {
+        qDebug() << "未登录用户，无法获取UserNo";
+        return "";
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT UserNo FROM User WHERE UserAccountName=:account");
+    query.bindValue(":account", currentUserAccount);
+    if (query.exec() && query.first()) {
+        return query.value("UserNo").toString();
+    }
+    qDebug() << "查询当前用户UserNo失败";
+    return "";
+}
+
+// 2. 实现“借阅操作（扣库存+写借阅记录）”
+bool IDatabase::borrowBook(const QString& userNo, const QString& bookNo, int borrowNum)
+{
+    // 校验参数
+    if (userNo.isEmpty() || bookNo.isEmpty() || borrowNum <= 0) {
+        qDebug() << "借阅参数无效";
+        return false;
+    }
+
+    // 开启事务（保证原子性）
+    if (!database.transaction()) {
+        qDebug() << "事务开启失败：" << database.lastError().text();
+        return false;
+    }
+
+    QSqlQuery query;
+    // 步骤1：扣减Book表库存
+    query.prepare("UPDATE Book SET Stock = Stock - :num WHERE BookNo=:bookNo AND Stock >= :num");
+    query.bindValue(":num", borrowNum);
+    query.bindValue(":bookNo", bookNo);
+    if (!query.exec()) {
+        qDebug() << "库存扣减失败：" << query.lastError().text();
+        database.rollback();
+        return false;
+    }
+    // 检查是否有行被修改（防止库存不足/书籍不存在）
+    if (query.numRowsAffected() == 0) {
+        qDebug() << "库存不足或书籍不存在";
+        database.rollback();
+        return false;
+    }
+
+    // 步骤2：插入Borrow表（Case设为“借出”，ReturnTime留空）
+    query.prepare("INSERT INTO Borrow (UserNo, BookNo, BorrowTime, \"Case\", BorrowNum) "
+                  "VALUES (:userNo, :bookNo, datetime('now'), '借出', :num)");
+    query.bindValue(":userNo", userNo);
+    query.bindValue(":bookNo", bookNo);
+    query.bindValue(":num", borrowNum);
+    if (!query.exec()) {
+        qDebug() << "借阅记录插入失败：" << query.lastError().text();
+        database.rollback();
+        return false;
+    }
+
+    // 提交事务
+    if (!database.commit()) {
+        qDebug() << "事务提交失败：" << database.lastError().text();
+        database.rollback();
+        return false;
+    }
+
+    return true;
+}
+
 QString IDatabase::userLogin(QString userName, QString password)
 {
     QSqlQuery query;

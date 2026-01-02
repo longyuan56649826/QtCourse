@@ -85,6 +85,8 @@ void MasterView::goBorrowView()
 
     pushWidgetToStackView(borrowView);
 
+    connect(borrowView,SIGNAL(goBack()),this,SLOT(goReaderBorrowAndReturnView()));
+
 }
 
 void MasterView::goDataView()
