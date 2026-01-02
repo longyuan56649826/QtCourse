@@ -47,13 +47,14 @@ void MasterView::on_stackedWidget_currentChanged(int arg1)
 
     if(title=="登录"){
         ui->btBack->setEnabled(false);
+        ui->btLogout->setEnabled(false);
     }
 }
 
 
 void MasterView::on_btLogout_clicked()
 {
-    close();
+    pushWidgetToStackView(loginView);
 }
 
 void MasterView::goBookView()
@@ -212,6 +213,8 @@ void MasterView::goBorrowAndReturnDataView()
     borrowandreturndataView =new BorrowAndReturnDataView(this);
 
     pushWidgetToStackView(borrowandreturndataView);
+
+    connect(borrowandreturndataView,SIGNAL(goBack()),this,SLOT(goManagementView()));
 }
 
 void MasterView::goUserEditView(int rowNo)

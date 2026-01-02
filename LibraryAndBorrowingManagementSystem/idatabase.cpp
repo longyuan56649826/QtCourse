@@ -127,9 +127,9 @@ bool IDatabase::initBorrowModel()
     BorrowTabModel->setHeaderData(2, Qt::Horizontal, "用户姓名");
     BorrowTabModel->setHeaderData(3, Qt::Horizontal, "书本名称");
     BorrowTabModel->setHeaderData(4, Qt::Horizontal, "借阅数量");
-    BorrowTabModel->setHeaderData(4, Qt::Horizontal, "借阅时间");
-    BorrowTabModel->setHeaderData(5, Qt::Horizontal, "借阅状态");
-    BorrowTabModel->setHeaderData(6, Qt::Horizontal, "归还时间");
+    BorrowTabModel->setHeaderData(5, Qt::Horizontal, "借阅时间");
+    BorrowTabModel->setHeaderData(6, Qt::Horizontal, "借阅状态");
+    BorrowTabModel->setHeaderData(7, Qt::Horizontal, "归还时间");
 
     // 修复原代码的赋值错误（theBookSelection → theBorrowSelection）
     theBorrowSelection = new QItemSelectionModel(BorrowTabModel);
@@ -332,6 +332,87 @@ bool IDatabase::searchCurrentUserBorrowByBookName(const QString& bookName)
         qDebug() << "搜索当前用户借阅记录失败：" << BorrowTabModel->lastError().text();
     }
     return success;
+}
+
+bool IDatabase::initBorrowBookAggregateModel()
+{
+    // 改用QSqlQueryModel实现聚合查询
+    BorrowTabModel = new QSqlQueryModel(this);
+
+    // 核心SQL：按BookNo分组，统计总借出数量，关联Book表获取书名，只查“借出”状态
+    QString sql = R"(
+        SELECT
+            bo.BookName AS 书本名称,
+            SUM(b.BorrowNum) AS 总借出数量
+        FROM Borrow b
+        LEFT JOIN Book bo ON b.BookNo = bo.BookNo
+        WHERE b."Case" = '借出'  -- 只统计未归还的借出记录
+        GROUP BY b.BookNo, bo.BookName  -- 按BookNo分组（确保相同书籍合并）
+        ORDER BY SUM(b.BorrowNum) DESC  -- 按借出数量降序排列
+    )";
+
+    BorrowTabModel->setQuery(sql, database);
+
+    // 检查查询是否成功
+    if (BorrowTabModel->lastError().isValid()) {
+        qDebug() << "借出书籍聚合模型初始化失败：" << BorrowTabModel->lastError().text();
+        return false;
+    }
+
+    // 设置表格中文表头
+    BorrowTabModel->setHeaderData(0, Qt::Horizontal, "书本名称");
+    BorrowTabModel->setHeaderData(1, Qt::Horizontal, "总借出数量");
+
+    theBorrowSelection = new QItemSelectionModel(BorrowTabModel);
+    return true;
+}
+
+bool IDatabase::searchBorrowBookAggregateByBookName(const QString& bookName)
+{
+    // 改用QSqlQueryModel实现聚合查询（带书名过滤）
+    BorrowTabModel = new QSqlQueryModel(this);
+
+    // 核心SQL：按BookNo分组，统计总借出数量，关联Book表获取书名，只查“借出”状态
+    QString sql = R"(
+        SELECT
+            bo.BookName AS 书本名称,
+            SUM(b.BorrowNum) AS 总借出数量
+        FROM Borrow b
+        LEFT JOIN Book bo ON b.BookNo = bo.BookNo
+        WHERE b."Case" = '借出'  -- 只统计未归还的借出记录
+    )";
+
+    // 加入书本名模糊查询（非空时）
+    if (!bookName.isEmpty()) {
+        sql += " AND bo.BookName LIKE :bookName";
+    }
+
+    sql += R"(
+        GROUP BY b.BookNo, bo.BookName  -- 按BookNo分组（确保相同书籍合并）
+        ORDER BY SUM(b.BorrowNum) DESC  -- 按借出数量降序排列
+    )";
+
+    QSqlQuery query(database);
+    query.prepare(sql);
+    if (!bookName.isEmpty()) {
+        query.bindValue(":bookName", "%" + bookName + "%"); // 模糊匹配
+    }
+    query.exec();
+
+    BorrowTabModel->setQuery(query);
+
+    // 检查查询是否成功
+    if (BorrowTabModel->lastError().isValid()) {
+        qDebug() << "借出书籍聚合搜索失败：" << BorrowTabModel->lastError().text();
+        return false;
+    }
+
+    // 设置表格中文表头
+    BorrowTabModel->setHeaderData(0, Qt::Horizontal, "书本名称");
+    BorrowTabModel->setHeaderData(1, Qt::Horizontal, "总借出数量");
+
+    theBorrowSelection = new QItemSelectionModel(BorrowTabModel);
+    return true;
 }
 
 QString IDatabase::getCurrentUserNo()

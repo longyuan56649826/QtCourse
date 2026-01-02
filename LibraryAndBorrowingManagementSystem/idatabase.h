@@ -64,6 +64,9 @@ public:
     // 执行归还操作（参数：借阅编号）
     bool returnBook(const QString& borrowNo);
     bool searchCurrentUserBorrowByBookName(const QString& bookName);
+    // 初始化“所有借出书籍的聚合模型”（按BookNo合并数量）
+    bool initBorrowBookAggregateModel();
+    bool searchBorrowBookAggregateByBookName(const QString& bookName);
 
     // 获取当前用户的UserNo
     QString getCurrentUserNo();
