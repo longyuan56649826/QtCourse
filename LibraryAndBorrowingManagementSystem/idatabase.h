@@ -58,6 +58,8 @@ public:
     bool deleteCurrentBook();//删除当前选中的书本记录
     bool submitBookEdit();//提交书本信息的编辑修改（保存到数据库）
     void revertBookEdit();//撤销书本信息的编辑修改（放弃未提交的更改）
+    bool initBorrowModel();//初始化书本信息模型
+    bool searchBorrow(QString filter);//按条件搜索书本
 
     // 获取当前用户的UserNo
     QString getCurrentUserNo();
@@ -71,6 +73,8 @@ public:
     QItemSelectionModel *theUserSelection;//用户信息表选择模型
     QSqlTableModel *BookTabModel;//书本信息表模型
     QItemSelectionModel *theBookSelection;//书本信息表选择模型
+    QSqlQueryModel *BorrowTabModel; // 借阅关联模型（多表查询）
+    QItemSelectionModel *theBorrowSelection;
 
 
 };

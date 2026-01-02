@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>454</width>
+    <width>648</width>
     <height>300</height>
    </rect>
   </property>
@@ -26,6 +26,25 @@
         </widget>
        </item>
        <item>
+        <widget class="QComboBox" name="SearchWay">
+         <item>
+          <property name="text">
+           <string>用户名字</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>账号名字</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>书本名字</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="btSearch">
          <property name="text">
           <string>查找</string>
@@ -33,39 +52,6 @@
          <property name="icon">
           <iconset resource="resource.qrc">
            <normaloff>:/image/search.png</normaloff>:/image/search.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btAdd">
-         <property name="text">
-          <string>添加</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../Lab4/image/new.png</normaloff>../Lab4/image/new.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btDelete">
-         <property name="text">
-          <string>删除</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../Lab4/image/delete.png</normaloff>../Lab4/image/delete.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btEdit">
-         <property name="text">
-          <string>修改</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../Lab4/image/edit.png</normaloff>../Lab4/image/edit.png</iconset>
          </property>
         </widget>
        </item>

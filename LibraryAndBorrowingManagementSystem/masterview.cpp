@@ -9,7 +9,7 @@ MasterView::MasterView(QWidget *parent)
 {
     ui->setupUi(this);
 
-    this->setWindowFlag(Qt::FramelessWindowHint);
+    //this->setWindowFlag(Qt::FramelessWindowHint);
 
     goLoginView();
 
@@ -75,6 +75,8 @@ void MasterView::goBorrowAndReturnView()
     borrowandreturnView =new BorrowAndReturnView(this);
 
     pushWidgetToStackView(borrowandreturnView);
+
+    connect(borrowandreturnView,SIGNAL(goBack()),this,SLOT(goReaderBorrowAndReturnView()));
 
 }
 

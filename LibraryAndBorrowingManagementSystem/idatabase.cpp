@@ -91,6 +91,85 @@ void IDatabase::revertBookEdit()
     BookTabModel->revertAll();
 }
 
+bool IDatabase::initBorrowModel()
+{
+    // 改用QSqlQueryModel实现多表关联查询
+    BorrowTabModel = new QSqlQueryModel(this);
+
+    // 关联Borrow + User + Book表，替换编号为名称
+    QString sql = R"(
+        SELECT
+            b.BorrowNo AS 借阅编号,
+            u.UserAccountName AS 用户账号,
+            u.UserName AS 用户姓名,
+            bo.BookName AS 书本名称,
+            b.BorrowNum AS 借阅数量,
+            b.BorrowTime AS 借阅时间,
+            b."Case" AS 借阅状态,
+            b.ReturnTime AS 归还时间
+        FROM Borrow b
+        LEFT JOIN User u ON b.UserNo = u.UserNo
+        LEFT JOIN Book bo ON b.BookNo = bo.BookNo
+        ORDER BY b.BorrowNo ASC
+    )";
+
+    BorrowTabModel->setQuery(sql, database);
+
+    // 检查查询是否成功
+    if (BorrowTabModel->lastError().isValid()) {
+        qDebug() << "借阅模型初始化失败：" << BorrowTabModel->lastError().text();
+        return false;
+    }
+
+    // 设置表格中文表头（前端可直接使用）
+    BorrowTabModel->setHeaderData(0, Qt::Horizontal, "借阅编号");
+    BorrowTabModel->setHeaderData(1, Qt::Horizontal, "用户账号");
+    BorrowTabModel->setHeaderData(2, Qt::Horizontal, "用户姓名");
+    BorrowTabModel->setHeaderData(3, Qt::Horizontal, "书本名称");
+    BorrowTabModel->setHeaderData(4, Qt::Horizontal, "借阅数量");
+    BorrowTabModel->setHeaderData(4, Qt::Horizontal, "借阅时间");
+    BorrowTabModel->setHeaderData(5, Qt::Horizontal, "借阅状态");
+    BorrowTabModel->setHeaderData(6, Qt::Horizontal, "归还时间");
+
+    // 修复原代码的赋值错误（theBookSelection → theBorrowSelection）
+    theBorrowSelection = new QItemSelectionModel(BorrowTabModel);
+    return true;
+}
+
+bool IDatabase::searchBorrow(QString filter)
+{
+    // 基础关联SQL
+    QString baseSql = R"(
+        SELECT
+            b.BorrowNo AS 借阅编号,
+            u.UserAccountName AS 用户账号,
+            u.UserName AS 用户姓名,
+            bo.BookName AS 书本名称,
+            b.BorrowNum AS 借阅数量,  -- 新增：借阅数量
+            b.BorrowTime AS 借阅时间,
+            b."Case" AS 借阅状态,
+            b.ReturnTime AS 归还时间
+        FROM Borrow b
+        LEFT JOIN User u ON b.UserNo = u.UserNo
+        LEFT JOIN Book bo ON b.BookNo = bo.BookNo
+    )";
+
+    // 拼接过滤条件（无过滤时查询所有）
+    if (!filter.isEmpty()) {
+        baseSql += " WHERE " + filter;
+    }
+    baseSql += " ORDER BY b.BorrowNo ASC";
+
+    BorrowTabModel->setQuery(baseSql, database);
+
+    // 返回查询是否成功
+    bool success = !BorrowTabModel->lastError().isValid();
+    if (!success) {
+        qDebug() << "借阅记录搜索失败：" << BorrowTabModel->lastError().text();
+    }
+    return success;
+}
+
 QString IDatabase::getCurrentUserNo()
 {
     if (currentUserAccount.isEmpty()) {
