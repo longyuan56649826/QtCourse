@@ -76,7 +76,7 @@ void MasterView::goBorrowAndReturnView()
 
     pushWidgetToStackView(borrowandreturnView);
 
-    connect(borrowandreturnView,SIGNAL(goBack()),this,SLOT(goReaderBorrowAndReturnView()));
+    connect(borrowandreturnView,SIGNAL(goBack()),this,SLOT(goManagementView()));
 
 }
 
@@ -201,6 +201,8 @@ void MasterView::goReturnView()
     returnView =new ReturnView(this);
 
     pushWidgetToStackView(returnView);
+
+    connect(returnView,SIGNAL(goBack()),this,SLOT(goReaderBorrowAndReturnView()));
 
 }
 

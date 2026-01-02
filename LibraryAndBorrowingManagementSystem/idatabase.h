@@ -60,6 +60,10 @@ public:
     void revertBookEdit();//撤销书本信息的编辑修改（放弃未提交的更改）
     bool initBorrowModel();//初始化书本信息模型
     bool searchBorrow(QString filter);//按条件搜索书本
+    bool initCurrentUserBorrowModel();
+    // 执行归还操作（参数：借阅编号）
+    bool returnBook(const QString& borrowNo);
+    bool searchCurrentUserBorrowByBookName(const QString& bookName);
 
     // 获取当前用户的UserNo
     QString getCurrentUserNo();
@@ -75,6 +79,7 @@ public:
     QItemSelectionModel *theBookSelection;//书本信息表选择模型
     QSqlQueryModel *BorrowTabModel; // 借阅关联模型（多表查询）
     QItemSelectionModel *theBorrowSelection;
+
 
 
 };

@@ -170,6 +170,170 @@ bool IDatabase::searchBorrow(QString filter)
     return success;
 }
 
+bool IDatabase::initCurrentUserBorrowModel()
+{
+    if (currentUserAccount.isEmpty()) {
+        qDebug() << "未登录用户，无法初始化当前用户借阅模型";
+        return false;
+    }
+
+    // 获取当前用户的UserNo
+    QString userNo = getCurrentUserNo();
+    if (userNo.isEmpty()) {
+        qDebug() << "获取当前用户UserNo失败";
+        return false;
+    }
+
+    // 用QSqlQueryModel查询“当前用户的未归还借阅记录”（关联Book表）
+    BorrowTabModel = new QSqlQueryModel(this);
+    QString sql = R"(
+        SELECT
+            b.BorrowNo AS 借阅编号,
+            bo.BookName AS 书本名字,
+            b.BorrowNum AS 借书数量,
+            b.BorrowTime AS 借书时间
+        FROM Borrow b
+        LEFT JOIN Book bo ON b.BookNo = bo.BookNo
+        WHERE b.UserNo = :userNo AND b."Case" = '借出'  -- 只显示当前用户的未归还记录
+        ORDER BY b.BorrowTime DESC
+    )";
+
+    QSqlQuery query(database);
+    query.prepare(sql);
+    query.bindValue(":userNo", userNo);
+    query.exec();
+
+    BorrowTabModel->setQuery(query);
+
+    // 检查查询是否成功
+    if (BorrowTabModel->lastError().isValid()) {
+        qDebug() << "当前用户借阅模型初始化失败：" << BorrowTabModel->lastError().text();
+        return false;
+    }
+
+    // 设置中文表头
+    BorrowTabModel->setHeaderData(0, Qt::Horizontal, "借阅编号");
+    BorrowTabModel->setHeaderData(1, Qt::Horizontal, "书本名字");
+    BorrowTabModel->setHeaderData(2, Qt::Horizontal, "借书数量");
+    BorrowTabModel->setHeaderData(3, Qt::Horizontal, "借书时间");
+
+    theBorrowSelection = new QItemSelectionModel(BorrowTabModel);
+    return true;
+}
+
+// 2. 执行归还操作（事务：更新状态+归还时间+恢复库存）
+bool IDatabase::returnBook(const QString& borrowNo)
+{
+    if (borrowNo.isEmpty()) {
+        qDebug() << "借阅编号为空，无法执行归还";
+        return false;
+    }
+
+    // 开启事务（保证原子性）
+    if (!database.transaction()) {
+        qDebug() << "归还事务开启失败：" << database.lastError().text();
+        return false;
+    }
+
+    QSqlQuery query;
+    bool success = true;
+    int borrowNum = 0;
+    QString bookNo;
+
+    // 步骤1：查询该借阅记录的“借阅数量”和“书本编号”（用于恢复库存）
+    query.prepare("SELECT BorrowNum, BookNo FROM Borrow WHERE BorrowNo = :borrowNo");
+    query.bindValue(":borrowNo", borrowNo);
+    if (!query.exec() || !query.first()) {
+        qDebug() << "查询借阅记录失败：" << query.lastError().text();
+        success = false;
+    } else {
+        borrowNum = query.value("BorrowNum").toInt();
+        bookNo = query.value("BookNo").toString();
+    }
+
+    // 步骤2：更新Borrow表（状态改为“已归还”+ 写入归还时间）
+    if (success) {
+        query.prepare("UPDATE Borrow SET \"Case\" = '已归还', ReturnTime = datetime('now') WHERE BorrowNo = :borrowNo");
+        query.bindValue(":borrowNo", borrowNo);
+        if (!query.exec()) {
+            qDebug() << "更新借阅状态失败：" << query.lastError().text();
+            success = false;
+        }
+    }
+
+    // 步骤3：恢复Book表库存（Stock += 借阅数量）
+    if (success && !bookNo.isEmpty() && borrowNum > 0) {
+        query.prepare("UPDATE Book SET Stock = Stock + :num WHERE BookNo = :bookNo");
+        query.bindValue(":num", borrowNum);
+        query.bindValue(":bookNo", bookNo);
+        if (!query.exec()) {
+            qDebug() << "恢复库存失败：" << query.lastError().text();
+            success = false;
+        }
+    }
+
+    // 事务提交/回滚
+    if (success) {
+        database.commit();
+    } else {
+        database.rollback();
+    }
+
+    return success;
+}
+
+bool IDatabase::searchCurrentUserBorrowByBookName(const QString& bookName)
+{
+    if (currentUserAccount.isEmpty()) {
+        qDebug() << "未登录用户，无法搜索借阅记录";
+        return false;
+    }
+
+    // 获取当前用户UserNo
+    QString userNo = getCurrentUserNo();
+    if (userNo.isEmpty()) {
+        qDebug() << "获取当前用户UserNo失败";
+        return false;
+    }
+
+    // 拼接模糊查询条件（书本名+当前用户+未归还）
+    QString sql = R"(
+        SELECT
+            b.BorrowNo AS 借阅编号,
+            bo.BookName AS 书本名字,
+            b.BorrowNum AS 借书数量,
+            b.BorrowTime AS 借书时间
+        FROM Borrow b
+        LEFT JOIN Book bo ON b.BookNo = bo.BookNo
+        WHERE b.UserNo = :userNo
+          AND b."Case" = '借出'
+    )";
+
+    // 加入书本名模糊查询（非空时）
+    if (!bookName.isEmpty()) {
+        sql += " AND bo.BookName LIKE :bookName";
+    }
+
+    sql += " ORDER BY b.BorrowTime DESC";
+
+    QSqlQuery query(database);
+    query.prepare(sql);
+    query.bindValue(":userNo", userNo);
+    if (!bookName.isEmpty()) {
+        query.bindValue(":bookName", "%" + bookName + "%");
+    }
+    query.exec();
+
+    BorrowTabModel->setQuery(query);
+
+    // 检查查询结果
+    bool success = !BorrowTabModel->lastError().isValid();
+    if (!success) {
+        qDebug() << "搜索当前用户借阅记录失败：" << BorrowTabModel->lastError().text();
+    }
+    return success;
+}
+
 QString IDatabase::getCurrentUserNo()
 {
     if (currentUserAccount.isEmpty()) {
