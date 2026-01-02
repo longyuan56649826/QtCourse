@@ -101,10 +101,14 @@ QString IDatabase::userLogin(QString userName, QString password)
         QString passwd=query.value("UserPassword").toString();
         QString identity=query.value("UserIdentity").toString();
         if(passwd==password){
-            if(identity=="管理员")
+            if(identity=="管理员"){
+                setCurrentUserAccount(userName);
                 return "AdminloginOK";
-            else if(identity=="读者")
+            }
+            else if(identity=="读者"){
+                setCurrentUserAccount(userName);
                 return "ReaderloginOK";
+            }
         }
         else{
             qDebug()<<"wrong Password";
@@ -213,3 +217,24 @@ void IDatabase::initDatabase()
 
 }
 
+void IDatabase::setCurrentUserAccount(const QString& account) {
+    currentUserAccount = account;
+}
+
+QString IDatabase::getCurrentUserAccount() {
+    return currentUserAccount;
+}
+
+QSqlRecord IDatabase::getCurrentUserInfo() {
+    if (currentUserAccount.isEmpty()) {
+        return QSqlRecord(); // 未登录，返回空记录
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM User WHERE UserAccountName=:account");
+    query.bindValue(":account", currentUserAccount);
+    if (query.exec() && query.first()) {
+        return query.record(); // 返回当前用户的记录
+    }
+    return QSqlRecord(); // 查询失败，返回空记录
+}

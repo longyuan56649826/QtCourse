@@ -22,6 +22,9 @@ public:
     QString userRegister(QString userAccountName,QString password,QString passwordagain,QString userName,QString id,QString userIdentity);
 
     void initDatabase();
+    void setCurrentUserAccount(const QString& account); // 设置当前登录用户账号
+    QString getCurrentUserAccount(); // 获取当前用户账号
+    QSqlRecord getCurrentUserInfo();// 获取当前用户信息记录
 
 
 private:
@@ -30,10 +33,10 @@ private:
     void operator=(IDatabase const&)  = delete;
 
     QSqlDatabase database;
+    QString currentUserAccount; // 当前登录用户账号
 
 signals:
 
-public:
 public:
     // bool initPatientModel();
     // int addNewPatient();

@@ -14,36 +14,25 @@
    <string>个人信息界面</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="txtSearch">
-         <property name="placeholderText">
-          <string>请输入姓名进行查找</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btSearch">
-         <property name="text">
-          <string>查找</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resource.qrc">
-           <normaloff>:/image/search.png</normaloff>:/image/search.png</iconset>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QTableView" name="tableView"/>
-     </item>
-    </layout>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="btEdit">
+     <property name="text">
+      <string>修改</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../Lab4/image/edit.png</normaloff>../Lab4/image/edit.png</iconset>
+     </property>
+    </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="2">
+    <widget class="QPushButton" name="btBack">
+     <property name="text">
+      <string>返回</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
@@ -56,17 +45,11 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="btBack">
-     <property name="text">
-      <string>返回</string>
-     </property>
-    </widget>
+   <item row="1" column="0" colspan="3">
+    <widget class="QTableView" name="tableView"/>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

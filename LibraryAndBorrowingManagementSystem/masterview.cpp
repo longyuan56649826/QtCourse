@@ -145,6 +145,11 @@ void MasterView::goPersonalInformationView()
 
     pushWidgetToStackView(personlinformationView);
 
+    connect(personlinformationView,SIGNAL(goBack()),this,SLOT(goReaderBorrowAndReturnView()));
+    connect(personlinformationView,SIGNAL(goUserEditView(int)),this,SLOT(goUserEditView(int)));
+
+
+
 }
 
 void MasterView::goReaderBorrowAndReturnView()
@@ -210,7 +215,7 @@ void MasterView::goUserEditView(int rowNo)
 
     pushWidgetToStackView(usereditView);
 
-    connect(readerView,SIGNAL(goBack()),this,SLOT(goReaderView()));
+    connect(usereditView,SIGNAL(goBack()),this,SLOT(goReaderView()));
 }
 
 void MasterView::goBookEditView(int rowNo)
