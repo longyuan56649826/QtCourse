@@ -106,6 +106,7 @@ bool IDatabase::initBorrowModel()
             bo.BookName AS 书本名称,
             b.BorrowNum AS 借阅数量,
             b.BorrowTime AS 借阅时间,
+            b.DueTime AS 到期时间,
             b."Case" AS 借阅状态,
             b.ReturnTime AS 归还时间
         FROM Borrow b
@@ -129,8 +130,9 @@ bool IDatabase::initBorrowModel()
     BorrowTabModel->setHeaderData(3, Qt::Horizontal, "书本名称");
     BorrowTabModel->setHeaderData(4, Qt::Horizontal, "借阅数量");
     BorrowTabModel->setHeaderData(5, Qt::Horizontal, "借阅时间");
-    BorrowTabModel->setHeaderData(6, Qt::Horizontal, "借阅状态");
-    BorrowTabModel->setHeaderData(7, Qt::Horizontal, "归还时间");
+    BorrowTabModel->setHeaderData(6, Qt::Horizontal, "到期时间");
+    BorrowTabModel->setHeaderData(7, Qt::Horizontal, "借阅状态");
+    BorrowTabModel->setHeaderData(8, Qt::Horizontal, "归还时间");
 
     // 修复原代码的赋值错误（theBookSelection → theBorrowSelection）
     theBorrowSelection = new QItemSelectionModel(BorrowTabModel);
@@ -192,7 +194,8 @@ bool IDatabase::initCurrentUserBorrowModel()
             b.BorrowNo AS 借阅编号,
             bo.BookName AS 书本名字,
             b.BorrowNum AS 借书数量,
-            b.BorrowTime AS 借书时间
+            b.BorrowTime AS 借书时间,
+            b.DueTime AS 到期时间
         FROM Borrow b
         LEFT JOIN Book bo ON b.BookNo = bo.BookNo
         WHERE b.UserNo = :userNo AND b."Case" = '借出'  -- 只显示当前用户的未归还记录
@@ -217,6 +220,7 @@ bool IDatabase::initCurrentUserBorrowModel()
     BorrowTabModel->setHeaderData(1, Qt::Horizontal, "书本名字");
     BorrowTabModel->setHeaderData(2, Qt::Horizontal, "借书数量");
     BorrowTabModel->setHeaderData(3, Qt::Horizontal, "借书时间");
+    BorrowTabModel->setHeaderData(4, Qt::Horizontal, "到期时间");
 
     theBorrowSelection = new QItemSelectionModel(BorrowTabModel);
     return true;

@@ -125,14 +125,18 @@ void BorrowView::on_btBorrow_clicked()
     // 5.2 插入借阅记录（Case加双引号避免关键字冲突）
     if (borrowSuccess) {
         // 把所有值都改成参数绑定（包括datetime和Case）
-        borrowQuery.prepare("INSERT INTO Borrow (UserNo, BookNo,BorrowNum,BorrowTime, \"Case\") "
-                            "VALUES (:userNo, :bookNo,:num,:borrowTime, :caseVal)");
-        // 绑定5个参数（和VALUES里的5个占位符对应）
+        QDateTime dueTime = QDateTime::currentDateTime().addDays(0);
+
+        borrowQuery.prepare("INSERT INTO Borrow (UserNo, BookNo,BorrowNum,BorrowTime, DueTime, \"Case\") "
+                            "VALUES (:userNo, :bookNo,:num,:borrowTime, :dueTime, :caseVal)");
+
+        // 绑定参数（新增DueTime）
         borrowQuery.bindValue(":userNo", userNo);
         borrowQuery.bindValue(":bookNo", bookNo);
-        borrowQuery.bindValue(":borrowTime", QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss")); // 用Qt生成当前时间
-        borrowQuery.bindValue(":caseVal", "借出");
         borrowQuery.bindValue(":num", borrowNum);
+        borrowQuery.bindValue(":borrowTime", QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"));
+        borrowQuery.bindValue(":dueTime", dueTime.toString("yyyy-MM-dd HH:mm:ss")); // 添加到期时间
+        borrowQuery.bindValue(":caseVal", "借出");
 
         if (!borrowQuery.exec()) {
             borrowSuccess = false;

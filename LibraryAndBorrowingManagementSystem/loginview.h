@@ -16,6 +16,9 @@ public:
     explicit LoginView(QWidget *parent = nullptr);
     ~LoginView();
 
+    void checkExpiredBorrows();
+    void checkSoonExpiredBorrows();
+
 private slots:
 
 
