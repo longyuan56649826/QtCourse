@@ -92,14 +92,14 @@ void MasterView::goBorrowView()
 
 }
 
-void MasterView::goDataView()
-{
-    qDebug()<<"goDataView";
-    dataView =new DataView(this);
+//void MasterView::goDataView()
+//{
+//    qDebug()<<"goDataView";
+//    dataView =new DataView(this);
 
-    pushWidgetToStackView(dataView);
+//    pushWidgetToStackView(dataView);
 
-}
+//}
 
 void MasterView::goPreviousView()
 {

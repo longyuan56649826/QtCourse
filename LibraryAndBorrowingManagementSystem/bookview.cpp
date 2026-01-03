@@ -43,7 +43,33 @@ BookView::~BookView()
 void BookView::on_btSearch_clicked()
 {
     QString filter=QString("BookName like '%%1%'").arg(ui->txtSearch->text());
-    IDatabase::getInstance().searchBook(filter);
+    // 禁用按钮防止重复点击
+    ui->btSearch->setEnabled(false);
+
+    // 创建新线程
+    searchThread = new QThread;
+
+    // 创建一个临时对象用于在线程中执行任务
+    QObject *worker = new QObject;
+    connect(searchThread, &QThread::started, worker, [=]() {
+        // 耗时操作放这里（数据库查询）
+        IDatabase::getInstance().searchBook(filter);
+
+        // 任务完成后切换回主线程更新界面
+        QMetaObject::invokeMethod(this, [=]() {
+            // 恢复按钮状态
+            ui->btSearch->setEnabled(true);
+            // 释放资源
+            worker->deleteLater();
+            searchThread->quit();
+            searchThread->wait();
+            searchThread->deleteLater();
+        }, Qt::QueuedConnection);
+    });
+
+    // 启动线程
+    worker->moveToThread(searchThread);
+    searchThread->start();
 }
 
 

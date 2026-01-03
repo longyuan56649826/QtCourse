@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::BookView *ui;
+    QThread *searchThread;
 
 signals:
     void goBack();

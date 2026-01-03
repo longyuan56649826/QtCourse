@@ -69,8 +69,10 @@ bool IDatabase::initBookModel()
 
 bool IDatabase::searchBook(QString filter)
 {
+    QMutexLocker locker(&dbMutex); // 自动加锁，函数结束自动解锁
     BookTabModel->setFilter(filter);
-    return BookTabModel->select();
+    BookTabModel->select();
+    return true;
 }
 
 bool IDatabase::deleteCurrentBook()
@@ -639,3 +641,4 @@ QSqlRecord IDatabase::getCurrentUserInfo() {
     }
     return QSqlRecord(); // 查询失败，返回空记录
 }
+

@@ -6,6 +6,7 @@
 #include <QSqlDatabase>
 #include <QDataWidgetMapper>
 #include <QMessageBox>
+#include <QThread> // 新增：线程头文件
 
 class IDatabase : public QObject
 {
@@ -27,6 +28,7 @@ public:
     QString getCurrentUserAccount(); // 获取当前用户账号
     QSqlRecord getCurrentUserInfo();// 获取当前用户信息记录
 
+
     QSqlDatabase database;
 
 
@@ -37,8 +39,11 @@ private:
 
 
     QString currentUserAccount; // 当前登录用户账号
+    QMutex dbMutex; // 数据库操作锁
 
 signals:
+
+
 
 public:
     // bool initPatientModel();

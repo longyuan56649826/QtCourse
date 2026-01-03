@@ -6,7 +6,6 @@
 #include "bookview.h"
 #include "borrowandreturnview.h"
 #include "borrowview.h"
-#include "dataview.h"
 #include "loginview.h"
 #include "managementview.h"
 #include "personalinformationview.h"
@@ -38,7 +37,7 @@ public slots:
     void goBookView();
     void goBorrowAndReturnView();
     void goBorrowView();
-    void goDataView();;
+    //void goDataView();;
     void goLoginView();
     void goManagementView();
     void goPersonalInformationView();
@@ -66,7 +65,7 @@ private:
     BookView *bookView;
     BorrowAndReturnView *borrowandreturnView;
     BorrowView *borrowView;
-    DataView *dataView;
+    //DataView *dataView;
     LoginView *loginView;
     ManagementView *managementView;
     PersonalInformationView *personlinformationView;

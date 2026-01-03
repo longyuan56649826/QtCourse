@@ -14,7 +14,6 @@ SOURCES += \
     borrowandreturndataview.cpp \
     borrowandreturnview.cpp \
     borrowview.cpp \
-    dataview.cpp \
     idatabase.cpp \
     loginview.cpp \
     main.cpp \
@@ -33,7 +32,6 @@ HEADERS += \
     borrowandreturndataview.h \
     borrowandreturnview.h \
     borrowview.h \
-    dataview.h \
     idatabase.h \
     loginview.h \
     managementview.h \
@@ -51,7 +49,6 @@ FORMS += \
     borrowandreturndataview.ui \
     borrowandreturnview.ui \
     borrowview.ui \
-    dataview.ui \
     loginview.ui \
     managementview.ui \
     masterview.ui \

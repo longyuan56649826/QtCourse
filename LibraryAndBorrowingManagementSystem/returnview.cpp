@@ -7,6 +7,7 @@ ReturnView::ReturnView(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ReturnView)
 {
+
     ui->setupUi(this);
 
     // 表格基础设置
