@@ -5,6 +5,7 @@
 #include <QtSql>
 #include <QSqlDatabase>
 #include <QDataWidgetMapper>
+#include <QMessageBox>
 
 class IDatabase : public QObject
 {

@@ -1,5 +1,6 @@
 #include "idatabase.h"
 #include <QUuid>
+#include <QMessageBox>
 
 bool IDatabase::initUserModel()
 {
@@ -495,6 +496,7 @@ QString IDatabase::userLogin(QString userName, QString password)
     if(query.first() &&query.value("UserAccountName").isValid()){
         QString passwd=query.value("UserPassword").toString();
         QString identity=query.value("UserIdentity").toString();
+
         if(passwd==password){
             if(identity=="管理员"){
                 setCurrentUserAccount(userName);
